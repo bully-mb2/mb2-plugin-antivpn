@@ -13,5 +13,13 @@ java -jar mb2-plugin-antivpn-VERSION.jar
 ```
 After your first run a settings file will be generated next to the jar. Fill your credentials there and run again.
 
+# Developing
+To start developing generate your sources by running 
+```
+./mvn jaxb2:generate
+```
+Run this command every time the schema updates
+
+
 ## License
 MB2 Anti-VPN is licensed under GPLv2 as free software. You are free to use, modify and redistribute MB2 Anti-VPN following the terms in LICENSE.txt
