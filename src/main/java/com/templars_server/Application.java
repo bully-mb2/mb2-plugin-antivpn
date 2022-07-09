@@ -21,7 +21,7 @@ public class Application {
     private static final Logger LOG = LoggerFactory.getLogger(Application.class);
 
     public static void main(String[] args) throws IOException, MqttException, SQLException {
-        LOG.info("======== Starting mb2-plugin-anti-vpn ========");
+        LOG.info("======== Starting mb2-plugin-antivpn ========");
         LOG.info("Loading settings");
         Settings settings = new Settings();
         settings.load("application.properties");
@@ -42,7 +42,7 @@ public class Application {
                 settings.get("rcon.password")
         );
 
-        LOG.info("Setting up Anti VPN");
+        LOG.info("Setting up antivpn");
         IPHub ipHub = new IPHub(settings.get("iphub.apikey"));
         AntiVPN antiVPN = new AntiVPN(ipHub, database, rcon);
 
