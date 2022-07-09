@@ -39,7 +39,7 @@ public class AntiVPN {
             LOG.info(String.format("Banning (slot=%s, ip=%s, alias=%s)", event.getSlot(), client.getIp(), client.getName()));
             rcon.print(event.getSlot(), "^1Anti-VPN » !!! WARNING !!! ^3You have been marked for VPN usage, to prevent abuse we ban VPNs and proxies.");
             rcon.printConAll(String.format("^1Anti-VPN »^7 Banning %s^7 for VPN or proxy usage", client.getName()));
-            LOG.info("Rcon ban: " +  rcon.ban(client.getSlot()));
+            LOG.info("Rcon ban: " +  rcon.ban(client.getSlot()).replace("\n", ""));
             banned.remove(event.getSlot());
             LOG.info("Ban list: " + banned);
         }
