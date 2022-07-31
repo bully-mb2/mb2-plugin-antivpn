@@ -12,7 +12,7 @@ import java.time.Duration;
 public class IPHub {
 
     private static final String API_URL = "https://v2.api.iphub.info/ip/";
-    private static final Duration API_TIMEOUT = Duration.ofMillis(500);
+    private static final Duration API_TIMEOUT = Duration.ofSeconds(2);
 
     private final String apiKey;
     private final ObjectMapper mapper;
