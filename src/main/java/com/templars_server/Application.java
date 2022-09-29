@@ -27,7 +27,7 @@ public class Application {
         LOG.info("Setting up database connection");
         Database database = new Database(
                 settings.get("database.address"),
-                settings.get("database.table"),
+                settings.get("database.name"),
                 settings.get("database.user"),
                 settings.get("database.password")
         );
