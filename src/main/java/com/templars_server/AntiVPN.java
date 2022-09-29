@@ -4,10 +4,11 @@ package com.templars_server;
 import com.templars_server.database.AntiVPNRow;
 import com.templars_server.database.Database;
 import com.templars_server.iphub.IPHub;
+import com.templars_server.mb2_log_reader.schema.ClientConnectEvent;
+import com.templars_server.mb2_log_reader.schema.ClientDisconnectEvent;
+import com.templars_server.mb2_log_reader.schema.ClientSpawnedEvent;
+import com.templars_server.mb2_log_reader.schema.ShutdownGameEvent;
 import com.templars_server.util.rcon.RconClient;
-import generated.ClientConnectEvent;
-import generated.ClientDisconnectEvent;
-import generated.ClientSpawnedEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -71,6 +72,11 @@ public class AntiVPN {
 
     void onClientDisconnectEvent(ClientDisconnectEvent event) {
         banned.remove(event.getSlot());
+    }
+
+
+    public void onShutdownGame(ShutdownGameEvent event) {
+        banned.clear();
     }
 
 }
