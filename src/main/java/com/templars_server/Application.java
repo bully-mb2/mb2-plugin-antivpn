@@ -2,12 +2,10 @@ package com.templars_server;
 
 import com.templars_server.database.Database;
 import com.templars_server.iphub.IPHub;
+import com.templars_server.mb2_log_reader.schema.*;
 import com.templars_server.util.mqtt.MBMqttClient;
 import com.templars_server.util.rcon.RconClient;
 import com.templars_server.util.settings.Settings;
-import generated.ClientConnectEvent;
-import generated.ClientDisconnectEvent;
-import generated.ClientSpawnedEvent;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,6 +49,7 @@ public class Application {
         client.putEventListener(antiVPN::onClientSpawnedEvent, ClientSpawnedEvent.class);
         client.putEventListener(antiVPN::onClientConnectEvent, ClientConnectEvent.class);
         client.putEventListener(antiVPN::onClientDisconnectEvent, ClientDisconnectEvent.class);
+        client.putEventListener(antiVPN::onShutdownGame, ShutdownGameEvent.class);
 
         LOG.info("Connecting to MQTT broker");
         client.connect(
