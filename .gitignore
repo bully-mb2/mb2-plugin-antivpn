@@ -78,3 +78,4 @@ nb-configuration.xml
 ##############################
 logs/
 /application.properties
+whitelist.txt

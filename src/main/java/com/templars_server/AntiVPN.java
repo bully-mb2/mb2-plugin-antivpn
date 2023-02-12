@@ -9,6 +9,7 @@ import com.templars_server.mb2_log_reader.schema.ClientDisconnectEvent;
 import com.templars_server.mb2_log_reader.schema.ClientSpawnedEvent;
 import com.templars_server.mb2_log_reader.schema.ShutdownGameEvent;
 import com.templars_server.util.rcon.RconClient;
+import com.templars_server.whitelist.Whitelist;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,12 +26,14 @@ public class AntiVPN {
     private final IPHub ipHub;
     private final Database database;
     private final RconClient rcon;
+    private final Whitelist whitelist;
     private final Map<Integer, ClientConnectEvent> banned;
 
-    public AntiVPN(IPHub ipHub, Database database, RconClient rcon) {
+    public AntiVPN(IPHub ipHub, Database database, RconClient rcon, Whitelist whitelist) {
         this.ipHub = ipHub;
         this.database = database;
         this.rcon = rcon;
+        this.whitelist = whitelist;
         this.banned = new HashMap<>();
     }
 
@@ -47,6 +50,11 @@ public class AntiVPN {
     }
 
     void onClientConnectEvent(ClientConnectEvent event) {
+        if (whitelist.contains(event.getIp())) {
+            LOG.debug("Skipping onConnect check, IP " + event.getIp() + " is whitelisted");
+            return;
+        }
+
         LOG.debug("New connection " + event.getIp());
         try {
             AntiVPNRow row = database.getRowByIp(event.getIp());
@@ -58,6 +66,10 @@ public class AntiVPN {
                         true
                 );
                 database.insertRow(row);
+            }
+
+            if (whitelist.contains(row.getIp())) {
+                return;
             }
 
             if (row.isVpn()) {
