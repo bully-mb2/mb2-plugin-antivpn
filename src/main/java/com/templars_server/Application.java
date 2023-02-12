@@ -6,6 +6,7 @@ import com.templars_server.mb2_log_reader.schema.*;
 import com.templars_server.util.mqtt.MBMqttClient;
 import com.templars_server.util.rcon.RconClient;
 import com.templars_server.util.settings.Settings;
+import com.templars_server.whitelist.Whitelist;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,9 +41,19 @@ public class Application {
                 settings.get("rcon.password")
         );
 
+        LOG.info("Setting up whitelist");
+        Whitelist whitelist = new Whitelist();
+        whitelist.load("whitelist.txt");
+
         LOG.info("Setting up antivpn");
         IPHub ipHub = new IPHub(settings.get("iphub.apikey"));
-        AntiVPN antiVPN = new AntiVPN(ipHub, database, rcon);
+        AntiVPN antiVPN = new AntiVPN(
+                ipHub,
+                database,
+                rcon,
+                whitelist,
+                settings.getBoolean("antivpn.delayedban")
+        );
 
         LOG.info("Registering event callbacks");
         MBMqttClient client = new MBMqttClient();
