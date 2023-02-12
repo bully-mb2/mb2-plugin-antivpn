@@ -47,7 +47,13 @@ public class Application {
 
         LOG.info("Setting up antivpn");
         IPHub ipHub = new IPHub(settings.get("iphub.apikey"));
-        AntiVPN antiVPN = new AntiVPN(ipHub, database, rcon, whitelist);
+        AntiVPN antiVPN = new AntiVPN(
+                ipHub,
+                database,
+                rcon,
+                whitelist,
+                settings.getBoolean("antivpn.delayedban")
+        );
 
         LOG.info("Registering event callbacks");
         MBMqttClient client = new MBMqttClient();
