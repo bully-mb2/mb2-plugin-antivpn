@@ -96,7 +96,8 @@ public class AntiVPN {
             LOG.info(String.format("Banning (slot=%s, ip=%s, alias=%s)", client.getSlot(), client.getIp(), client.getName()));
             rcon.print(client.getSlot(), "^1Anti-VPN » !!! WARNING !!! ^3You have been marked for VPN usage, to prevent abuse we ban VPNs and proxies.");
             rcon.printConAll(String.format("^1Anti-VPN »^7 Banning %s^7 for VPN or proxy usage", client.getName()));
-            LOG.info("Rcon ban: " +  rcon.ban(client.getSlot()).replace("\n", ""));
+            LOG.info("Rcon addip: " +  rcon.addIp(client.getIp()).replace("\n", ""));
+            LOG.info("Rcon kick: " +  rcon.kick(client.getSlot()).replace("\n", ""));
             banned.remove(client.getSlot());
             LOG.info("Ban list: " + banned);
         }
